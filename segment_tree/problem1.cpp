@@ -44,6 +44,10 @@ void build(ll i, ll l, ll r) {
 void lazy_propagate(ll i) {
   if (lz[i] == 0)
     return;
+  if (st[i] == ed[i]) {
+    lz[i] = 0;
+    return;
+  }
 
   ll l_cld = 2 * i;
   ll r_cld = 2 * i + 1;
