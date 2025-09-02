@@ -1,4 +1,5 @@
 // Appropriate when there is no update operation on the nodes.
+// O(2V) -> O(V)
 
 #include <cstring>
 #include <iostream>
@@ -10,6 +11,7 @@ bool vis[n];
 int st[n], ed[n], ft[2 * n], ps[2 * n];
 int tim;
 
+// O(V + E) -> O(V), as E <= 2V
 void dfs(int i) {
   if (i >= sizeof(t) / sizeof(t[0]))
     return;
@@ -34,6 +36,7 @@ void dfs(int i) {
   ed[v] = tim++;
 }
 
+// O(1)
 int subtree_sum(int v) { return ps[ed[v]] - ps[st[v] - 1] + v; }
 
 int main() {
@@ -46,6 +49,7 @@ int main() {
 
   dfs(1);
 
+  // O(V);
   ps[0] = ft[0];
   for (int i = 1; i < 2 * n; ++i) {
     if (ft[i] < 0)
