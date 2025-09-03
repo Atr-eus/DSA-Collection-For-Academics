@@ -7,7 +7,6 @@ using namespace std;
 
 constexpr int n = 9;
 int t[] = {-1, 3, 5, 1, 6, 2, 0, 8, -1, -1, 7, 4};
-bool vis[n];
 int st[n], ed[n], ft[2 * n], ps[2 * n];
 int tim;
 
@@ -17,13 +16,12 @@ void dfs(int i) {
     return;
 
   int v = t[i];
-  if (v == -1 || vis[v])
+  if (v == -1)
     return;
 
   int l = 2 * i;
   int r = 2 * i + 1;
 
-  vis[v] = true;
   ft[tim] = v;
   st[v] = ++tim;
 
@@ -40,7 +38,6 @@ void dfs(int i) {
 int subtree_sum(int v) { return ps[ed[v]] - ps[st[v] - 1] + v; }
 
 int main() {
-  memset(vis, false, sizeof(vis));
   memset(st, -1, sizeof(st));
   memset(ed, -1, sizeof(ed));
   memset(ft, -1, sizeof(ft));
