@@ -1,5 +1,6 @@
 // Problem: Construct the sparse table of a tree, and use binary lifting
 // technique to find the LCA (Lowest Common Ancestor) or any two nodes.
+// O(n log n + log n + log n) -> O(n log n)
 
 #include <cstring>
 #include <iostream>
@@ -13,6 +14,9 @@ vector<int> tree[n + 1] = {{},       {2, 3, 4}, {}, {5, 6, 7}, {}, {}, {8, 9},
 int up[n + 1][log2n];
 int lev[n + 1];
 
+// O(n log n)
+// observation: visited array is redundant for a tree, because we're only
+// calling dfs on the children of each node
 void dfs(int v, int p) {
   up[v][0] = p;
 
@@ -30,6 +34,7 @@ void dfs(int v, int p) {
   }
 }
 
+// O(log n)
 int binary_lift(int v, int k) {
   for (int i = 0; i < log2n && v != -1; ++i) {
     if (k & (1 << i)) {
@@ -40,6 +45,7 @@ int binary_lift(int v, int k) {
   return v;
 }
 
+// O(log n)
 int lca(int u, int v) {
   if (lev[u] > lev[v])
     swap(u, v);
