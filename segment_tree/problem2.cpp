@@ -129,8 +129,8 @@ void print() {
 }
 
 int main() {
-  build(1, 1, n - 1);
+  build(1, 1, n);
   cout << query(1, 1, n - 1, 3, 5) << "\n";
-  update(1, 1, n - 1, 1, 5);
-  cout << query(1, 1, n - 1, 3, 5) << "\n";
+  update(1, 1, n, 1, 5);
+  cout << query(1, 1, n, 3, 5) << "\n";
 }
