@@ -21,6 +21,7 @@ class BIT {
 
 public:
   BIT(int n) : n(n), bit(n + 1, 0) {};
+  // O(n);
   BIT(const int a[], int n) : n(n), bit(n + 1, 0) {
     for (int i = 0; i < n; ++i)
       bit[i + 1] = a[i];
@@ -31,6 +32,7 @@ public:
     }
   };
 
+  // O(log n)
   void update(int i, int val) {
     while (i <= n) {
       bit[i] += val;
@@ -48,6 +50,7 @@ public:
     return s;
   }
 
+  // O(log n)
   int query_range(int l, int r) { return query(r) - query(l - 1); }
 };
 
@@ -55,6 +58,7 @@ class SegmentTree {
   int n;
   vector<int> sum;
 
+  // O(n)
   void _build(const int a[], int i, int l, int r) {
     if (l == r) {
       sum[i] = a[l - 1];
@@ -70,6 +74,7 @@ class SegmentTree {
     sum[i] = sum[lc] + sum[rc];
   }
 
+  // O(log n)
   void _update(int i, int pos, int val, int l, int r) {
     if (l == r) {
       sum[i] += val;
@@ -88,6 +93,7 @@ class SegmentTree {
     sum[i] = sum[lc] + sum[rc];
   }
 
+  // O(log n)
   int _query(int i, int l, int r, int L, int R) {
     if (L > r || R < l)
       return 0;
