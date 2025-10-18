@@ -22,12 +22,9 @@ vector<int> build(const string &s) {
         return bkt[a] < bkt[b];
 
       int bkt_a = (a + l < n) ? bkt[a + l] : -1;
-      int bck_b = (b + l < n) ? bkt[b + l] : -1;
-      return bkt_a < bck_b;
+      int bkt_b = (b + l < n) ? bkt[b + l] : -1;
+      return bkt_a < bkt_b;
     });
-    for (auto &i : res)
-      cout << i + 1 << " ";
-    cout << "\n";
 
     // assign new ranks
     tmp[res[0]] = 0;
@@ -51,13 +48,61 @@ vector<int> build(const string &s) {
   return res;
 }
 
-int main() {
-  string s;
-  cin >> s;
-  auto res = build(s);
+bool cmp_sfx(const string &s, const string &p, int st) {
+  int i, j;
+  for (i = st, j = 0; i < s.size() && j < p.size(); ++i, ++j) {
+    if (s[i] < p[j])
+      return true;
+    if (s[i] > p[j])
+      return false;
+  }
 
-  for (auto &i : res) {
+  if (j == p.size())
+    return false;
+  return (i == s.size() && j < p.size());
+}
+
+bool starts_with(const string &s, const string &p, int st) {
+  if (st + p.size() > s.size())
+    return false;
+
+  for (int i = 0; i < p.size(); ++i)
+    if (s[st + i] != p[i])
+      return false;
+  return true;
+}
+
+bool has_pattern(const string &s, const string &p) {
+  auto sfx = build(s);
+  int l = 0, r = sfx.size(), m;
+
+  for (auto &i : sfx) {
     cout << (i + 1) << ": " << s.substr(i) << "\n";
+  }
+
+  while (l < r) {
+    m = l + ((r - l) >> 1);
+
+    if (cmp_sfx(s, p, sfx[m]))
+      l = m + 1;
+    else
+      r = m;
+  }
+
+  if (l == sfx.size())
+    return false;
+  return starts_with(s, p, sfx[l]);
+}
+
+int main() {
+  string s, p;
+  cin >> s;
+  cin >> p;
+
+  if (has_pattern(s, p)) {
+    cout << s << " has pattern " << p << ".\n";
+  } else {
+    cout << s << " doesn't have pattern " << p << ".\n";
   }
   return 0;
 }
